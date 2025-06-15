@@ -1,0 +1,11 @@
+﻿@model dynamic
+<h2>Báo cáo</h2>
+<p>Tổng số sự kiện: @Model.EventCount</p>
+<p>Tổng số người tham gia: @Model.AttendeeCount</p>
+<h3>Sự kiện theo danh mục</h3>
+<ul>
+    @foreach (var item in Model.EventsByCategory)
+    {
+        <li>@item.CategoryName: @item.EventCount sự kiện</li>
+    }
+</ul>

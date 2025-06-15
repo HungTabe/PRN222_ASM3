@@ -1,0 +1,16 @@
+﻿@model EventCategory
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<h2>Xóa danh mục</h2>
+
+<h3>Bạn có chắc muốn xóa danh mục "@Model.CategoryName"?</h3>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="CategoryID" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

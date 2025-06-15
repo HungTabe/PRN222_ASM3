@@ -1,0 +1,22 @@
+﻿@model EventManagementProject.Models.ViewModels.RegisterAttendeeViewModel
+
+<h3>Register for Event</h3>
+<form asp-controller="Attendees" asp-action="Register" method="post" class="my-3" >
+    <input type="hidden" asp-for="EventID" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary my-2">Register</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

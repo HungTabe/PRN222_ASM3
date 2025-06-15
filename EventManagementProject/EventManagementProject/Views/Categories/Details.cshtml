@@ -1,0 +1,43 @@
+﻿@model EventCategory
+
+@{
+    ViewData["Title"] = "Chi tiết danh mục";
+}
+
+<h2>Chi tiết danh mục</h2>
+
+<dl class="row">
+    <dt class="col-sm-2">Tên danh mục</dt>
+    <dd class="col-sm-10">@Model.CategoryName</dd>
+    <dt class="col-sm-2">Số sự kiện</dt>
+    <dd class="col-sm-10">@Model.Events?.Count</dd>
+</dl>
+
+<h4>Danh sách sự kiện</h4>
+@if (Model.Events != null && Model.Events.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên sự kiện</th>
+                <th>Thời gian bắt đầu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventItem in Model.Events)
+            {
+                <tr>
+                    <td>@eventItem.Title</td>
+                    <td>@eventItem.StartTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Chưa có sự kiện nào thuộc danh mục này.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.CategoryID" class="btn btn-warning">Sửa</a>
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>
