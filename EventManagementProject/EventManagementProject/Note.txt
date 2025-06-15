@@ -1,10 +1,13 @@
-Install package
+﻿Install package
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 8.0.5
 dotnet add package Microsoft.AspNetCore.SignalR --version 1.1.0
 
 dotnet add package Microsoft.EntityFrameworkCore --version 8.0.7
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.7
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 8.0.7
+
+dotnet add package Microsoft.AspNetCore.SignalR.Client --version 8.0.0
+
 
 
 Setup Appsetting
@@ -21,4 +24,26 @@ Setup db name EventManagementDb
 Update db
 dotnet ef database update
 
+Make Admin
+-- Kiểm tra user hiện tại có UserID = 1
+SELECT [UserID], [Username], [Role]
+FROM [EventManagementDb].[dbo].[Users]
+WHERE [UserID] = 1;
 
+-- Cập nhật Role thành 'Admin' cho user có UserID = 1
+UPDATE [EventManagementDb].[dbo].[Users]
+SET [Role] = 'Admin'
+WHERE [UserID] = 1;
+
+
+Login 
+https://localhost:7137/Account/Login
+
+Register
+https://localhost:7137/Account/Register
+
+Event Index
+https://localhost:7137/Event
+
+Create Event
+https://localhost:7137/Event/Create

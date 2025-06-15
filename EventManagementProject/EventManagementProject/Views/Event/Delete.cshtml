@@ -1,0 +1,18 @@
+﻿@model EventManagementProject.Models.Event
+
+<h2>Xác nhận xóa</h2>
+<h3>Bạn có chắc muốn xóa sự kiện "@Model.Title"?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Tiêu đề</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+        <dt class="col-sm-2">Thời gian bắt đầu</dt>
+        <dd class="col-sm-10">@Model.StartTime</dd>
+    </dl>
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="EventID" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Quay lại</a>
+    </form>
+</div>

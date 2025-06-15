@@ -1,0 +1,82 @@
+﻿@using EventManagementProject.Models.ViewModels
+@model EventManagementProject.Models.ViewModels.EventDetailViewModel
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<h2>Event Details</h2>
+
+<!-- Display TempData messages -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<!-- Event Details -->
+<dl class="row" id="event-details-@Model.EventID">
+    <dt class="col-sm-2">Title</dt>
+    <dd class="col-sm-10 event-title">@Model.Title</dd>
+    <dt class="col-sm-2">Description</dt>
+    <dd class="col-sm-10 event-description">@Model.Description</dd>
+    <dt class="col-sm-2">Location</dt>
+    <dd class="col-sm-10 event-location">@Model.Location</dd>
+    <dt class="col-sm-2">Start Time</dt>
+    <dd class="col-sm-10 event-start-time">@Model.StartTime</dd>
+    <dt class="col-sm-2">End Time</dt>
+    <dd class="col-sm-10 event-end-time">@Model.EndTime</dd>
+    <dt class="col-sm-2">Category</dt>
+    <dd class="col-sm-10 event-category">@Model.CategoryName</dd>
+    <dt class="col-sm-2">Attendees</dt>
+    <dd class="col-sm-10 event-attendee-count">@Model.AttendeeCount</dd>
+</dl>
+
+<!-- Registration Form Partial View -->
+@{
+    var registerModel = new RegisterAttendeeViewModel { EventID = Model.EventID };
+}
+<partial name="_RegisterAttendee" model="registerModel" />
+
+<!-- Action Buttons -->
+<a asp-action="Edit" asp-route-id="@Model.EventID" class="btn btn-warning">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+<!-- JavaScript for SignalR -->
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/eventHub")
+        .build();
+
+    // Update attendee count
+    connection.on("ReceiveAttendeeUpdate", (eventId, attendeeCount) => {
+        const countElement = document.querySelector(`#event-details-${eventId} .event-attendee-count`);
+        if (countElement) {
+            countElement.innerText = attendeeCount;
+        }
+    });
+
+    // Update event information
+    connection.on("ReceiveEventUpdate", (eventId, eventData) => {
+        const details = document.getElementById(`event-details-${eventId}`);
+        if (details) {
+            details.querySelector('.event-title').innerText = eventData.title;
+            details.querySelector('.event-description').innerText = eventData.description || '';
+            details.querySelector('.event-location').innerText = eventData.location || '';
+            details.querySelector('.event-start-time').innerText = new Date(eventData.startTime).toLocaleString();
+            details.querySelector('.event-end-time').innerText = new Date(eventData.endTime).toLocaleString();
+            details.querySelector('.event-category').innerText = eventData.categoryName;
+            details.querySelector('.event-attendee-count').innerText = eventData.attendeeCount;
+        }
+    });
+
+    connection.start().catch(err => console.error(err));
+</script>
