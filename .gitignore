@@ -1,0 +1,55 @@
+# Ignore Visual Studio and build output directories
+bin/
+obj/
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Ignore NuGet packages
+packages/
+!packages/repositories.config
+
+# Ignore project-specific build artifacts
+/App_Data/
+*.log
+*.cache
+
+# Ignore SQL Server database files (if any local DB files are generated)
+*.mdf
+*.ldf
+
+# Ignore Entity Framework Core migrations (managed via code, not tracked)
+/Data/Migrations/
+
+# Ignore user-specific configuration files
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
+!appsettings.json  # Keep the base configuration file
+
+# Ignore Node.js modules and build output (if using client-side build tools)
+node_modules/
+dist/
+build/
+
+# Ignore temporary files and OS-specific files
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files (e.g., Rider, VS Code)
+.idea/
+*.vscode/
+
+# Ignore test result files
+TestResults/
+
+# Ignore SignalR temporary files (if any)
+**/Hubs/*.tmp
+
+# Ignore sensitive or generated files
+secrets.json
+*.pfx
+*.pubxml
