@@ -16,5 +16,11 @@ namespace EventManagementProject.Hubs
         {
             await Clients.All.SendAsync("ReceiveEventUpdate", eventId, eventData);
         }
+
+        // Update total attendee number report information
+        public async Task SendAttendeeReportUpdate(int numberAttendeeUpdate)
+        {
+            await Clients.All.SendAsync("ReceiveAttendeeNumberUpdate", numberAttendeeUpdate);
+        }
     }
 }

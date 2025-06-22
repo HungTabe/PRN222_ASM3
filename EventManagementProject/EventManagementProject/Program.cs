@@ -42,6 +42,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
+
 // Add route SignalR
 app.MapHub<EventHub>("/eventHub");
 // Use session

@@ -44,6 +44,7 @@ namespace EventManagementProject.Controllers
                 // Lưu thông tin đăng nhập vào Session
                 HttpContext.Session.SetString("UserId", user.UserID.ToString());
                 HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetString("Role", user.Role);
 
                 return RedirectToAction("Index", "Event");
             }

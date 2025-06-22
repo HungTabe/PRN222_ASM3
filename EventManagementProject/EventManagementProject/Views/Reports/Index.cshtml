@@ -1,7 +1,9 @@
 ﻿@model dynamic
 <h2>Báo cáo</h2>
 <p>Tổng số sự kiện: @Model.EventCount</p>
-<p>Tổng số người tham gia: @Model.AttendeeCount</p>
+<p class="event-attendee-count-2" >Tổng số người tham gia: @Model.AttendeeCount</p>
+<dd class="event-attendee-count">@Model.AttendeeCount</dd>
+
 <h3>Sự kiện theo danh mục</h3>
 <ul>
     @foreach (var item in Model.EventsByCategory)
@@ -9,3 +11,52 @@
         <li>@item.CategoryName: @item.EventCount sự kiện</li>
     }
 </ul>
+
+
+<!-- JavaScript for SignalR -->
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script>
+
+    const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/eventHub")
+    .build();
+
+    // Update attendee count for Report Page
+    connection.on("ReceiveAttendeeNumberUpdate", (numberAttendeeUpdate) => {
+        const countElement = document.querySelector(`event-attendee-count`);
+        if (countElement){
+            countElement.innerText = numberAttendeeUpdate;
+        } else {
+            console.log("Chua the bat duoc value can update")
+        }
+    });
+
+  
+
+    // const connection = new signalR.HubConnectionBuilder()
+    //     .withUrl("/eventHub")
+    //     .build();
+
+    // Update attendee count
+    // connection.on("ReceiveAttendeeUpdate", (eventId, attendeeCount) => {
+    //     const countElement = document.getElementById(`attendee-count-${eventId}`);
+    //     if (countElement) {
+    //         countElement.innerText = attendeeCount;
+    //     }
+    // });
+
+    // Update event information
+    // connection.on("ReceiveEventUpdate", (eventId, eventData) => {
+    //     const row = document.getElementById(`event-row-${eventId}`);
+    //     if (row) {
+    //         row.querySelector('.event-title').innerText = eventData.title;
+    //         row.querySelector('.event-description').innerText = eventData.description || '';
+    //         row.querySelector('.event-location').innerText = eventData.location || '';
+    //         row.querySelector('.event-start-time').innerText = new Date(eventData.startTime).toLocaleString();
+    //         row.querySelector('.event-category').innerText = eventData.categoryName;
+    //         row.querySelector('.event-attendee-count').innerText = eventData.attendeeCount;
+    //     }
+    // });
+
+    connection.start().catch(err => console.error(err));
+</script>

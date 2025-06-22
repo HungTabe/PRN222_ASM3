@@ -1,0 +1,49 @@
+Cách tạo 1 hub signalR
+Step 1 : Đăng kí
+- Cài package
+// NugetPackage
+dotnet add package Microsoft.AspNetCore.SignalR --version 1.1.0
+dotnet add package Microsoft.AspNetCore.SignalR.Client --version 8.0.0
+
+- Đăng kí ở Program.cs
+// Add SignalR
+builder.Services.AddSignalR();
+
+// Add route SignalR
+app.MapHub<EventHub>("/eventHub");
+
+Step 2 : Dựng Hub
+Viết EventHub Class
+- Kế thừa Hub
+- Design hàm xứ lý Signal 
+  Hàm sử lý signal cần design
+  - Name signal
+  - Các tham số cần cho Client cập nhật data realtime
+- Thực hiện call gửi signal đến cho các client
+
+Ai sẽ là người call tới hàm xử lý signal này để khi 
+thao tác các client có thể tự động cập nhật
+
+Step 3 : Tại Client nhận và handle signal NTN ? 
+- Viết script : 
+  - Kết nối tới hub
+  - Viết cơ chế bắt các signal cần để cập nhật dữ liệu
+    - Cơ chế sẽ bắt theo tên signal và lấy data gửi
+      kèm cùng signal đó để cập nhật cho RazorPage
+
+Viết cơ chế cập nhật realtime data cho 
+mục Tổng số người tham gia tại report của Admin
+
+
+
+
+- Mô phỏng module Xem sản phẩm (mock)
+  - Sau khi xem sản phẩm xong thì sẽ gửi data sản phẩm
+    sang cho mình - và mình sẽ thực hiện show cấu hình
+    sản phẩm và - cho khách hàng khai báo phương thức 
+    thanh toán
+  - Nếu tính tiền thiệt thì nên setup con PayOS
+- Connection Module Xem sản phẩm vào Module thanh toán 
+  của em 
+- Phương án 2 là chơ bên kia xong thì mình connect (Ko suggest)
+

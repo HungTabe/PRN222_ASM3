@@ -11,11 +11,13 @@ namespace EventManagementProject.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHubContext<EventHub> _hubContext;
+        private readonly IHubContext<EventHub> _hubContext2;
 
         public AttendeesController(ApplicationDbContext context, IHubContext<EventHub> hubContext)
         {
             _context = context;
             _hubContext = hubContext;
+            _hubContext2 = hubContext;
         }
 
         [HttpPost]
@@ -48,6 +50,10 @@ namespace EventManagementProject.Controllers
                     var attendeeCount = _context.Attendees.Count(a => a.EventID == model.EventID);
                     _hubContext.Clients.All.SendAsync("ReceiveAttendeeUpdate", model.EventID, attendeeCount);
 
+                    // Send real-time attendee count update for Report of Admin
+                    var attentdeeCountReport = _context.Attendees.Count(a => a.EventID == model.EventID);
+                    _hubContext2.Clients.All.SendAsync("ReceiveAttendeeNumberUpdate", attentdeeCountReport);
+
                     TempData["SuccessMessage"] = "Registration successful.";
                 }
                 catch (Exception ex)
@@ -59,6 +65,8 @@ namespace EventManagementProject.Controllers
             {
                 TempData["ErrorMessage"] = "Unable to register. Please check the information.";
             }
+
+            
 
             return RedirectToAction("Details", "Event", new { id = model.EventID });
         }

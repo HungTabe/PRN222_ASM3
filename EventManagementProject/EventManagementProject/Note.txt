@@ -6,6 +6,8 @@ dotnet add package Microsoft.EntityFrameworkCore --version 8.0.7
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.7
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 8.0.7
 
+dotnet add package Microsoft.AspNetCore.SignalR --version 1.1.0
+
 dotnet add package Microsoft.AspNetCore.SignalR.Client --version 8.0.0
 
 
